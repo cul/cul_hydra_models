@@ -17,7 +17,7 @@ module CulHydraModels
     # we use the super method first, and then post-process the output of that super method call.
     def label=(new_label)
       super(new_label)
-      super(self.label[0,255])
+      super(self.label[0, 255])
     end
   end
 end

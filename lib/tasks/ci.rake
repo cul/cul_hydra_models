@@ -22,15 +22,35 @@ namespace :cul_hydra_models do
       spec.rcov = true
     end
 
+    require 'rubocop/rake_task'
+
+    desc 'Run style checker'
+    RuboCop::RakeTask.new(:rubocop) do |task|
+      task.requires << 'rubocop-rspec'
+      task.fail_on_error = true
+    end
+
   rescue LoadError => e
     puts "[Warning] Exception creating rspec rake tasks.  This message can be ignored in environments that intentionally do not pull in the RSpec gem (i.e. production)."
     puts e
   end
 
-  desc "CI build"
-  task ci: ['environment'] do
-    ENV['RAILS_ENV'] = "test"
+  desc "CI build without rubocop"
+  task :ci_nocop do
+    ENV['RAILS_ENV'] = 'test'
+    Rails.env = ENV['RAILS_ENV']
+    Rake::Task["cul_hydra_models:ci_task"].invoke
+  end
 
+  desc "CI build with Rubocop validation"
+  task ci: ['cul_hydra_models:rubocop'] do
+    ENV['RAILS_ENV'] = 'test'
+    Rails.env = ENV['RAILS_ENV']
+    Rake::Task["cul_hydra_models:ci_task"].invoke
+  end
+
+  desc "CI build"
+  task :ci_task do
     unless File.exists?(Jettywrapper.jetty_dir)
       puts "\nNo test jetty found.  Will download / unzip a copy now.\n"
     end
@@ -51,8 +71,6 @@ namespace :cul_hydra_models do
     # Put spec opts in a file named .rspec in root
     ruby_engine = defined?(RUBY_ENGINE) ? RUBY_ENGINE : "ruby"
     ENV['COVERAGE'] = 'true' unless ruby_engine == 'jruby'
-
-   # Rake::Task["active_fedora:fixtures"].invoke
     Rake::Task["cul_hydra_models:rspec"].invoke
   end
 

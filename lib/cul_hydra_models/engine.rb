@@ -12,11 +12,8 @@ module CulHydraModels
         require 'active-fedora'
         cul_hydra_models_gem_location = Bundler.rubygems.find_name('cul_hydra_models').first.full_gem_path
         config_path = File.join(cul_hydra_models_gem_location, 'config/predicate_mappings.yml')
-        puts "- No local config/predicate_mappings.yml file found, so predicates will be loaded from cul_hydra_models gem at: #{config_path}"
-        #config_path = 'config/predicate_mappings.yml'
-        ActiveFedora.init(:predicate_mappings_config_path => config_path)
+        ActiveFedora.init(predicate_mappings_config_path: config_path)
       end
     end
-
   end
 end

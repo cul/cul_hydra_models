@@ -6,20 +6,20 @@ def logger
 end
 
 def filename_for_pid(pid)
-  pid.gsub(/\:/,'_') + '.xml'
+  pid.gsub(/\:/, '_') + '.xml'
 end
 
 def pid_for_filename(fname)
-  fname.sub(/\.xml$/,'').sub(/_/,':')
+  fname.sub(/\.xml$/, '').sub(/_/, ':')
 end
 
 def cmodel_fixture(name)
-  path = File.join(APP_ROOT, 'spec', 'fixtures','cmodels', name)
+  path = File.join(APP_ROOT, 'spec', 'fixtures', 'cmodels', name)
   File.open(path, 'rb')
 end
 
 def each_cmodel
-  path = File.join(APP_ROOT, 'spec', 'fixtures','cmodels')
+  path = File.join(APP_ROOT, 'spec', 'fixtures', 'cmodels')
   Dir.new(path).each do |fname|
     if fname =~ /\.xml$/
       yield pid_for_filename(fname)
@@ -29,10 +29,10 @@ end
 
 def config_subs
   @subs ||= begin
-    cfile = File.join(APP_ROOT,'config','subs.yml')
+    cfile = File.join(APP_ROOT, 'config', 'subs.yml')
     subs = {}
     if File.exists? cfile
-      open(cfile) {|blob| subs = YAML::load(blob)[ENV['RAILS_ENV'] || 'test'] }
+      open(cfile) { |blob| subs = YAML::load(blob)[ENV['RAILS_ENV'] || 'test'] }
     else
       logger.warn("No subs.yml found; CModels will be loaded without inline substitutions")
     end
@@ -62,7 +62,7 @@ end
 
 def load_content(content, pid)
   begin
-    connection.ingest(:file=>StringIO.new(content), :pid=>pid)
+    connection.ingest(file: StringIO.new(content), pid: pid)
   rescue Exception => e
     puts "possible problem with ingest of #{pid}: #{e.message}"
     raise e
@@ -71,11 +71,10 @@ end
 
 def purge(pid)
   begin
-    connection.purge_object :pid=>pid
+    connection.purge_object(pid: pid)
   rescue Exception => e
     puts "possible problem with purge of #{pid}: #{e.message}"
   end
-
 end
 
 def reload(pid)
@@ -93,7 +92,7 @@ namespace :cul_hydra_models do
 
     task :load do #=> :environment do
       pid = ENV["PID"]
-      load_content(content_for(pid),pid)
+      load_content(content_for(pid), pid)
     end
 
     task :purge do #=> :environment do
@@ -111,7 +110,7 @@ namespace :cul_hydra_models do
       pattern = Regexp.compile(pattern) if pattern
       reload("ldpd:nullbind")
       each_cmodel do |pid|
-        unless (pattern and not pid =~ pattern)
+        unless (pattern && pid !~ pattern)
           puts "reloading #{pid}"
           reload(pid)
         end
