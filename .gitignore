@@ -9,8 +9,6 @@ spec/dummy/tmp/
 /tmp
 Gemfile.lock
 *.gem
-fedora.yml
-solr.yml
 jetty
 .DS_Store
 *~
