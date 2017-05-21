@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Eric O'Hanlon"]
   s.email       = ["elo2112@columbia.edu"]
   s.homepage    = "https://github.com/cul/cul_hydra_models"
-  s.summary     = "Hydra models for CUL repository apps"
+  s.summary     = "Hydra models for CUL repository apps."
   s.description = "Hydra models for CUL repository apps."
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency('active-fedora', '~> 8.0')
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails", '~> 3.6.0'
 end
