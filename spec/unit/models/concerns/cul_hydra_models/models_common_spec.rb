@@ -2,6 +2,15 @@ require 'rails_helper'
 
 describe "CulHydraModels::Common", type: :unit do
 
+  context "predicates.yml file" do
+    it "is present, and predicates are loaded and available to use in relationships" do
+      cagg = ContentAggregator.new(pid: 'bat:man')
+
+      expect { cagg.add_relationship(:fake_predicate, 'http://library.columbia.com/some/uri/value') }.to raise_error(ActiveFedora::UnregisteredPredicateError)
+      expect { cagg.add_relationship(:cul_member_of, 'http://library.columbia.com/some/uri/value')}.not_to raise_error
+    end
+  end
+
   describe ".label= " do
     it "should truncate labels that are longer than 255 characters to 255 characters" do
       test_obj = ContentAggregator.new
