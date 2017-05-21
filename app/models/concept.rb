@@ -1,4 +1,4 @@
 require 'active-fedora'
-class ContentAggregator < ActiveFedora::Base
+class Concept < ActiveFedora::Base
   include CulHydraModels::Common
 end

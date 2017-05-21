@@ -1,19 +1,19 @@
 require 'rails_helper'
 require 'active_fedora/test_support'
 
-describe ContentAggregator do
+describe GenericResource do
   it_behaves_like 'An ActiveModel'
   include ActiveFedora::TestSupport
-  subject { ContentAggregator.new }
+  subject { GenericResource.new }
 
   describe "when persisted to fedora" do
     before { subject.save! }
     after { subject.destroy }
     it 'should exist' do
-      expect(ContentAggregator.exists?(subject.pid)).to be_truthy
+      expect(GenericResource.exists?(subject.pid)).to be_truthy
     end
     it 'should cast properly when retrieved' do
-      expect(ActiveFedora::Base.find(subject.pid)).to be_a(ContentAggregator)
+      expect(ActiveFedora::Base.find(subject.pid)).to be_a(GenericResource)
     end
   end
 
