@@ -1,8 +1,8 @@
-# CulHydraModels
-Short description and motivation.
+# CUL Hydra Models for repository applications
 
-## Usage
-How to use my plugin.
+- Requires Rails 5.1.1 or later.
+- Relies on ActiveFedora 8 gem.
+- Works with Fedora 3.8.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -21,8 +21,11 @@ Or install it yourself as:
 $ gem install cul_hydra_models
 ```
 
-## Contributing
-Contribution directions go here.
-
-## License
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+## To Run Integration Tests (coming soon)
+```
+bundle exec rake cul_hydra:ci
+```
+## To Run Unit Tests
+```
+bundle exec rspec spec/unit
+```
