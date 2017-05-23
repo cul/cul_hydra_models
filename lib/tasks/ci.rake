@@ -1,7 +1,3 @@
-require 'jettywrapper'
-Jettywrapper.url = "https://github.com/projecthydra/hydra-jetty/archive/7.x-stable.zip"
-Jettywrapper.jetty_dir = File.join(Rails.root, 'jetty') # This places the jetty directory inside of the dummy app
-
 namespace :cul_hydra_models do
 
   begin
@@ -37,24 +33,24 @@ namespace :cul_hydra_models do
 
   desc "CI build without rubocop"
   task :ci_nocop do
-    ENV['RAILS_ENV'] = 'test'
-    Rails.env = ENV['RAILS_ENV']
-    Rake::Task["cul_hydra_models:ci_task"].invoke
+    exec({ 'RAILS_ENV' => 'test' }, 'bundle', 'exec', 'rake', 'cul_hydra_models:ci_task')
   end
 
   desc "CI build with Rubocop validation"
   task ci: ['cul_hydra_models:rubocop'] do
-    ENV['RAILS_ENV'] = 'test'
-    Rails.env = ENV['RAILS_ENV']
-    Rake::Task["cul_hydra_models:ci_task"].invoke
+    exec({ 'RAILS_ENV' => 'test' }, 'bundle', 'exec', 'rake', 'cul_hydra_models:ci_task')
   end
 
   desc "CI build"
   task :ci_task do
+    require 'jettywrapper'
+    Jettywrapper.url = "https://github.com/projecthydra/hydra-jetty/archive/7.x-stable.zip"
+    Jettywrapper.jetty_dir = File.join(Rails.root, 'tmp', 'jetty-test')
+
     unless File.exists?(Jettywrapper.jetty_dir)
       puts "\nNo test jetty found.  Will download / unzip a copy now.\n"
     end
-    Rake::Task["app:jetty:clean"].invoke
+    Rake::Task["jetty:clean"].invoke
 
     jetty_params = Jettywrapper.load_config.merge(jetty_home: Jettywrapper.jetty_dir)
     puts "Starting Fedora 3 (jettywrapper)...\n"
