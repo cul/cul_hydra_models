@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Hydra models for CUL repository apps."
   s.description = "Hydra models for CUL repository apps."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib,spec/fixtures/cmodels}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.1"
   s.add_dependency 'active-fedora', '~> 8.4'
