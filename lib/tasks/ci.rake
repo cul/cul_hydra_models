@@ -1,7 +1,3 @@
-require 'jettywrapper'
-Jettywrapper.url = "https://github.com/projecthydra/hydra-jetty/archive/7.x-stable.zip"
-Jettywrapper.jetty_dir = File.join(Rails.root, 'jetty') # This places the jetty directory inside of the dummy app
-
 namespace :cul_hydra_models do
 
   begin
@@ -51,6 +47,10 @@ namespace :cul_hydra_models do
 
   desc "CI build"
   task :ci_task do
+    require 'jettywrapper'
+    Jettywrapper.url = "https://github.com/projecthydra/hydra-jetty/archive/7.x-stable.zip"
+    Jettywrapper.jetty_dir = File.join(Rails.root, 'jetty') # This places the jetty directory inside of the dummy app
+
     unless File.exists?(Jettywrapper.jetty_dir)
       puts "\nNo test jetty found.  Will download / unzip a copy now.\n"
     end
