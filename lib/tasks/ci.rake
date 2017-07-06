@@ -1,5 +1,4 @@
 namespace :cul_hydra_models do
-
   begin
     # This code is in a begin/rescue block so that the Rakefile is usable
     # in an environment where RSpec is unavailable (i.e. production).
@@ -54,7 +53,8 @@ namespace :cul_hydra_models do
     unless File.exists?(Jettywrapper.jetty_dir)
       puts "\nNo test jetty found.  Will download / unzip a copy now.\n"
     end
-    Rake::Task["app:jetty:clean"].invoke
+    #Rake::Task["app:jetty:clean"].invoke
+    Jettywrapper.clean
 
     jetty_params = Jettywrapper.load_config.merge(jetty_home: Jettywrapper.jetty_dir)
     puts "Starting Fedora 3 (jettywrapper)...\n"
