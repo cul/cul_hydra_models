@@ -1,8 +1,6 @@
-require: rubocop-rspec
-
-inherit_gem:
-  rubocop-rails:
-    - config/rails.yml
+require:
+  - rubocop-rspec
+  - rubocop-rails
 
 AllCops:
   DisplayCopNames: true
@@ -17,7 +15,7 @@ AllCops:
     - 'vendor/**/*'
     - 'frontend/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/AbcSize:
@@ -44,11 +42,11 @@ Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
 
-Style/BlockEndNewline:
+Layout/BlockEndNewline:
   Exclude:
     - 'spec/**/*'
 
-Style/MultilineBlockLayout:
+Layout/MultilineBlockLayout:
   Exclude:
     - 'spec/**/*'
 
@@ -81,7 +79,7 @@ Style/HashSyntax:
 Style/LineEndConcatenation:
   Exclude: []
 
-Style/PredicateName:
+Naming/PredicateName:
   Exclude: []
 
 Style/GlobalVars:
@@ -96,7 +94,7 @@ Style/ClassVars:
 
 Style/SignalException:
   Enabled: false
-  
+
 Rails:
   Enabled: true
 
